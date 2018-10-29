@@ -1,0 +1,83 @@
+#%RAML 1.0
+version: v1
+baseUri: https://mocksvc.mulesoft.com/mocks/dafda0a0-f2f4-4d6a-956c-128eff1e45de # 
+title: Contact Management API
+
+/contacts:
+  get:
+    description: Retrieves contacts
+    responses: 
+      200:
+        body: 
+          application/json:
+            example: !include example/retrive-response.json
+      400:
+        body:
+          application/json:
+            example: {
+              "message": "Error retrieving data from the contact database."
+            } 
+  post:
+    description:  Creates new contact
+    body: 
+      application/json:
+        example: !include example/retrive-response.json
+    responses:
+      201:
+        body:
+          application/json:
+            example: {
+              "message": "contact uploaded (but not really)."
+            } 
+      400:
+        body:
+          application/json:
+            example: {
+              "message": "Error creating data to the contact database."
+            }   
+/{id}:
+  get:
+    description: Retrieves information for a contact
+    responses: 
+      200:
+        body: 
+          application/json:
+            example: !include example/retrive-response.json
+      400:
+        body: 
+          application/json:
+            example: {
+              "message": "Error retrieving a data from the contact database."
+            }
+  put:
+    description: replace all values of the associated contact.
+    body: 
+      application/json:
+    responses: 
+      200:
+          body: 
+            application/json:
+              example: {
+                "message": "contact replaced (but not really)"
+              }
+      400:
+          body:
+            application/json:
+              example: {
+                "message": "Error in replacing the contact."
+              }
+  delete:
+    description: delete the associated contact.
+    responses: 
+      200:
+          body:
+            application/json:
+              example: {
+                "message": "contact deleted (but not really)"
+              }
+      400: 
+          body:
+            application/json:
+              example: {
+                "message": "Error deleting contact."
+              }

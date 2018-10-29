@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <db:mysql-config name="MySQL_Configuration" host="db_a422b7_biniman" port="7003" user="a422b7_biniman" password="083420Host" database="db_a422b7_biniman" doc:name="MySQL Configuration"/>
+    <db:mysql-config name="mysqlhosting" host="mysql7003.site4now.net" port="3306" user="db_a422b7_biniman" password="083420Host" database="db_a422b7_biniman" doc:name="MySQL Configuration"/>
+    <db:mysql-config name="MySQL_Configuration1" host="mysql7003.site4now.net" port="3306" user="a422b7_biniman" password="083420Host" database="db_a422b7_biniman" doc:name="MySQL Configuration"/>
+    <flow name="postFlow">
+        <db:insert config-ref="mysqlhosting" doc:name="Database">
+            <db:parameterized-query/>
+        </db:insert>
+        <dw:transform-message doc:name="Transform Message" metadata:id="e5e87ab2-d333-421f-84d9-cdc251b61c28">
+            <dw:input-payload/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+        <flow name="getByIdFlow">
+        <db:select config-ref="mysqlhosting" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT * FROM contacts By Id]]></db:parameterized-query>
+        </db:select>
+        <dw:transform-message doc:name="Transform Message" metadata:id="8d525d6e-6c14-4499-a3fa-b06a0667b84c">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+        <flow name="getAllFlow">
+        <db:select config-ref="mysqlhosting" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT * FROM contacts]]></db:parameterized-query>
+        </db:select>
+        <dw:transform-message doc:name="Transform Message" metadata:id="3326969e-6a96-4bc7-bda2-54e2780bf9f3">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+        <flow name="deleteFlow">
+        <db:delete config-ref="mysqlhosting" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT * FROM contacts]]></db:parameterized-query>
+        </db:delete>
+        <dw:transform-message doc:name="Transform Message" metadata:id="114337fa-e0d4-407f-b3ee-b8703b664a18">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+        <flow name="putFlow">
+        <db:update config-ref="mysqlhosting" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT * FROM contacts]]></db:parameterized-query>
+        </db:update>
+        <dw:transform-message doc:name="Transform Message" metadata:id="c674e441-b058-4504-8c6a-f37531f7fd94">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+</mule>
